@@ -16,7 +16,7 @@ wired to a `Mixed Crop and Livestock Farm Labourer Advisor`
 (`mixedfarm.governor`), following the itonami actor pattern
 (ADR-2607121000): `:intake -> :advise -> :govern -> :decide -+-> :commit
 (:ok?) +-> :request-approval (:escalate?, human-in-the-loop interrupt) +->
-:hold (:hard?)`. 29 tests / 62 assertions green (`clojure -M:test`). HARD
+:hold (:hard?)`. 29 tests / 62 assertions green (`kbb -M:test`). HARD
 invariants (always hold, never overridable): worker
 provenance, farm provenance, no-actuation (`:effect` must be `:propose`), a
 closed op-allowlist (`:log-work-record`, `:schedule-crew-operation`,
