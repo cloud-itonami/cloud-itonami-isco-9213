@@ -1,0 +1,36 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a farm scheduling/logistics coordination robot
+;; performs crew scheduling, planting/harvest/feeding logging and
+;; seed/feed/farm-supplies procurement coordination for a mixed
+;; crop-and-livestock farm crew (ISCO 9213). It never handles crops or
+;; livestock. Its physical work is the supplies logistics: carrying seed and
+;; feed bags along the farm track that climbs from the yard to the fields,
+;; and lifting a seed bag onto the planter hopper edge for the crew.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-9213"
+ :cases
+ [{:id :seed-bags-up-farm-track
+   :kind :transport
+   :procedure "supply robot carries 100 kg of seed/feed bags 150 m up the gravel farm track from the yard to the field gate"
+   :params {:mass-kg 120.0 :payload-kg 100.0 :distance-m 150.0 :v-max-mps 1.2 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 500.0 :crr 0.05
+            :cog-height-m 0.45 :support-half-length-m 0.40 :payload-cog-height-m 0.75
+            :max-time-s 1800.0}
+   :sweep {:param :slope-deg :values [0.0 3.0 6.0 9.0 12.0]}
+   :quantity :cycle-time-s
+   :limit {:max 180.0 :basis "estimate: one supply leg within the 10-minute planter refill stop, allowing for loading"}
+   :boundary {:lo 0.0 :hi 20.0}}
+  {:id :seed-bag-onto-hopper
+   :kind :manipulator
+   :procedure "arm lifts a seed bag from the supply robot's deck onto the edge of the planter hopper"
+   :params {:l1-m 0.70 :l2-m 0.60 :m1-kg 10.0 :m2-kg 6.0
+            :from [0.80 0.10] :to [0.40 1.00] :duration-s 3.0 :steps 500}
+   :sweep {:param :payload-kg :values [5.0 10.0 15.0 20.0 25.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 300.0 :basis "estimate: continuous shoulder torque of a ~25 kg-payload agricultural arm"}
+   :boundary {:lo 1.0 :hi 60.0}}]}
