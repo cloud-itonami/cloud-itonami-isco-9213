@@ -1,7 +1,7 @@
 (ns mixedfarm.store
   "SSoT for the ISCO-08 9213 mixed crop and livestock farm scheduling/
   logistics coordination actor (itonami actor pattern, ADR-2607121000 /
-  CLAUDE.md Actors section; README's 'Robotics premise' — a farm
+  AGENTS.md Actors section; README's 'Robotics premise' — a farm
   scheduling/logistics coordination robot manages crew scheduling,
   planting/harvest/feeding-log/progress-record logging and seed/feed/
   farm-supplies procurement coordination for a mixed crop-and-livestock
